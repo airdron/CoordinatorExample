@@ -33,14 +33,10 @@ final class StorePagerViewController: MXSegmentedPagerController {
     }
 
     func update(models: [StorePageModel]) {
-        //self.models.forEach { $0.viewController.willMove(toParent: nil) }
-        // self.models.forEach { $0.viewController.removeFromParent() }
-
-        
+        models.forEach { $0.viewController.willMove(toParent: nil) }
+        models.forEach { $0.viewController.removeFromParent() }
         self.models = models
-        //self.models.forEach { addChild($0.viewController) }
         self.segmentedPager.reloadData()
-        //self.models.forEach { $0.viewController.didMove(toParent: self) }
         if !self.models.isEmpty {
             self.segmentedPager.pager.showPage(at: 0, animated: false)
         }
@@ -50,13 +46,13 @@ final class StorePagerViewController: MXSegmentedPagerController {
         return models.count
     }
 
-//    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
-//        return models[index].viewController
-//    }
-    
-    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewForPageAt index: Int) -> UIView {
-        return models[index].viewController.view
+    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
+        return models[index].viewController
     }
+//    
+//    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewForPageAt index: Int) -> UIView {
+//        return models[index].viewController.view
+//    }
 
     override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
         return models[index].title
@@ -151,21 +147,29 @@ class ViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(closeHandler))
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .fastForward, target: self, action: #selector(presentNextHandler))
         view.backgroundColor = backgroundColor
-        addChild(pagerVC)
-        pagerVC.segmentedPager.parallaxHeader.height = 200
-        let pview = UIView()
-        pview.backgroundColor = .yellow
-        pagerVC.segmentedPager.parallaxHeader.view = pview
-        view.addSubview(pagerVC.view)
-        pagerVC.didMove(toParent: self)
+//        addChild(pagerVC)
+//        pagerVC.segmentedPager.parallaxHeader.height = 200
+//        let pview = UIView()
+//        pview.backgroundColor = .yellow
+//        pagerVC.segmentedPager.parallaxHeader.view = pview
+//        view.addSubview(pagerVC.view)
+//        pagerVC.didMove(toParent: self)
+        
+//        DispatchQueue.main.async {
+//            self.pagerVC.update(models: [StorePageModel(title: "", viewController: self.secondController)])
+//        }
         DispatchQueue.main.async {
-            self.pagerVC.update(models: [StorePageModel(title: "", viewController: self.secondController)])
+            self.addChild(self.secondController)
+            self.view.addSubview(self.secondController.view)
+            self.secondController.didMove(toParent: self)
         }
+        
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
         
     @objc func closeHandler() {
@@ -175,6 +179,8 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = customTitle
+        
+        
     }
         
     override func viewDidLayoutSubviews() {
