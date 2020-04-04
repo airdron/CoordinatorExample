@@ -1,0 +1,53 @@
+PODS:
+  - HMSegmentedControl (1.5.3)
+  - MXPagerView (0.1.3)
+  - MXParallaxHeader (0.5.2)
+  - MXSegmentedPager (3.1.0):
+    - HMSegmentedControl (~> 1.5.2)
+    - MXPagerView (~> 0.1.3)
+    - MXParallaxHeader (~> 0.5.2)
+  - PinLayout (1.8.13)
+
+DEPENDENCIES:
+  - HMSegmentedControl (from `https://github.com/youla-dev/HMSegmentedControl`, branch `accessibility`)
+  - MXPagerView (= 0.1.3)
+  - MXParallaxHeader (from `https://github.com/youla-dev/MXParallaxHeader.git`)
+  - MXSegmentedPager (from `https://github.com/youla-dev/MXSegmentedPager.git`, branch `88z`)
+  - PinLayout (~> 1.8.7)
+
+SPEC REPOS:
+  https://cdn.cocoapods.org/:
+    - MXPagerView
+    - PinLayout
+
+EXTERNAL SOURCES:
+  HMSegmentedControl:
+    :branch: accessibility
+    :git: https://github.com/youla-dev/HMSegmentedControl
+  MXParallaxHeader:
+    :git: https://github.com/youla-dev/MXParallaxHeader.git
+  MXSegmentedPager:
+    :branch: 88z
+    :git: https://github.com/youla-dev/MXSegmentedPager.git
+
+CHECKOUT OPTIONS:
+  HMSegmentedControl:
+    :commit: 67d11895a15d6f4855278072e7e8a8ab705dd985
+    :git: https://github.com/youla-dev/HMSegmentedControl
+  MXParallaxHeader:
+    :commit: 543932fc56a40c66b35ec88d60f2e3165fd4bd10
+    :git: https://github.com/youla-dev/MXParallaxHeader.git
+  MXSegmentedPager:
+    :commit: be2c8968a11db097e83d0ce323811610c92c3529
+    :git: https://github.com/youla-dev/MXSegmentedPager.git
+
+SPEC CHECKSUMS:
+  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
+  MXPagerView: db0c020aeada6a0c704f18f8053468560e346982
+  MXParallaxHeader: 5070ba8e8af27ec793c0d32ae82cfd2318e59635
+  MXSegmentedPager: 70bee6e9aeb41205288407d896646165951b89a5
+  PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
+
+PODFILE CHECKSUM: ec8962519d099d7993f133e052dcbe7526b61b8f
+
+COCOAPODS: 1.8.4

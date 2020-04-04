@@ -37,24 +37,43 @@ class MainCoordinator {
         
         firstController.onPresentNext = { [weak self, weak firstNavigationController] in
             guard let firstNavigationController = firstNavigationController else { return }
-            self?.showSecond(in: firstNavigationController)
+            self?.showSecond(in: firstNavigationController, firstController: firstController)
         }
-        navigationController.present(firstNavigationController, animated: true, completion: nil)
+        navigationController.present(firstNavigationController, animated: false, completion: nil)
     }
     
-    func showSecond(in navigationController: UINavigationController) {
+    func showSecond(in navigationController: UINavigationController, firstController: UIViewController) {
         let secondController = ViewController(title: #function, backgroundColor: .blue)
         let secondNavigationController = UINavigationController(rootViewController: secondController)
-        
+
         secondController.onClose = { [weak self] in
             self?.onClose?()
         }
-        
-        secondController.onPresentNext = { [weak self, weak secondNavigationController] in
-            guard let secondNavigationController = secondNavigationController else { return }
-            self?.showThird(in: secondNavigationController)
+
+        secondController.onPresentNext = { [weak self] in
+            self?.showThird(in: secondController, firstController: firstController)
         }
-        navigationController.present(secondNavigationController, animated: true, completion: nil)
+        
+        print(firstController)
+        
+        //navigationController.present(secondNavigationController, animated: true, completion: nil)
+        navigationController.pushViewController(secondController, animated: true)
+    }
+    
+    func showThird(in secondController: UIViewController, firstController: UIViewController) {
+        let thirdController = ViewController(title: #function, backgroundColor: .red)
+        let thirdNavigationController = UINavigationController(rootViewController: thirdController)
+        
+        thirdController.onClose = { [weak self] in
+            self?.onClose?()
+        }
+        
+        thirdController.onPresentNext = { [weak self, weak thirdNavigationController] in
+            guard let thirdNavigationController = thirdNavigationController else { return }
+            self?.nextFlow(in: thirdNavigationController)
+        }
+        
+        secondController.present(thirdNavigationController, animated: true, completion: nil)
     }
     
     func showThird(in navigationController: UINavigationController) {
