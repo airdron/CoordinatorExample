@@ -25,9 +25,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.rootViewController = rootNavigationController
         self.window?.makeKeyAndVisible()
         
-        rootController.onPresentNext = { [weak self] in
-            self?.startFlow()
-        }
+        rootNavigationController.present(UIViewController(), animated: false, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: false, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+//        rootNavigationController.dismiss(animated: true, completion: nil)
+
     }
     
     func startFlow() {

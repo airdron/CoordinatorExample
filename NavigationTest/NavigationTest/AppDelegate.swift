@@ -17,19 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var rootController = ViewController(title: "Root", backgroundColor: .black)
     
-    private lazy var rootNavigationController = UINavigationController(rootViewController: rootController)
-    
     private var mainCoordinator: MainCoordinator?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = rootNavigationController
+        self.window?.rootViewController = UINavigationController(rootViewController: rootController)
         self.window?.makeKeyAndVisible()
-        
-        rootController.onPresentNext = { [weak self] in
-            self?.startFlow()
-        }
-        
         return true
     }
 
@@ -38,18 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @available(iOS 13, *)
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-    
-    func startFlow() {
-        mainCoordinator = MainCoordinator(navigationController: rootNavigationController)
-        
-        mainCoordinator?.onClose = { [weak mainCoordinator] in
-            mainCoordinator?.finish {
-                mainCoordinator = nil
-            }
-        }
-        
-        mainCoordinator?.start()
     }
 }
 

@@ -31,15 +31,23 @@ class MainCoordinator {
     func showFirst(in navigationController: UINavigationController) {
         let firstController = ViewController(title: #function, backgroundColor: .green)
         let firstNavigationController = UINavigationController(rootViewController: firstController)
-        firstController.onClose = { [weak self] in
-            self?.onClose?()
-        }
-        
-        firstController.onPresentNext = { [weak self, weak firstNavigationController] in
-            guard let firstNavigationController = firstNavigationController else { return }
-            self?.showSecond(in: firstNavigationController, firstController: firstController)
-        }
+//        firstController.onClose = { [weak self] in
+//            self?.onClose?()
+//        }
+//
+//        firstController.onPresentNext = { [weak self, weak firstNavigationController] in
+//            guard let firstNavigationController = firstNavigationController else { return }
+//            self?.showSecond(in: firstNavigationController, firstController: firstController)
+//        }
         navigationController.present(firstNavigationController, animated: false, completion: nil)
+        firstNavigationController.dismiss(animated: true) {
+            navigationController.dismiss(animated: false)
+            navigationController.dismiss(animated: false)
+            navigationController.dismiss(animated: false)
+        }
+//        navigationController.dismiss(animated: false, completion: nil)
+//        navigationController.dismiss(animated: false, completion: nil)
+//        navigationController.dismiss(animated: false, completion: nil)
     }
     
     func showSecond(in navigationController: UINavigationController, firstController: UIViewController) {
@@ -54,10 +62,9 @@ class MainCoordinator {
             self?.showThird(in: secondController, firstController: firstController)
         }
         
-        print(firstController)
-        
-        //navigationController.present(secondNavigationController, animated: true, completion: nil)
-        navigationController.pushViewController(secondController, animated: true)
+        navigationController.present(secondNavigationController, animated: true)
+        navigationController.dismiss(animated: true, completion: nil)
+        self.showThird(in: secondNavigationController)
     }
     
     func showThird(in secondController: UIViewController, firstController: UIViewController) {
