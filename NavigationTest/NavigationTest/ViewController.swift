@@ -33,10 +33,10 @@ class CollectionViewCell: UICollectionViewCell {
 }
 
 class CollectionView: UICollectionView, UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
-    }
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+//                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return false
+//    }
 }
 
 class HeaderView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -177,6 +177,48 @@ final class StorePagerViewController: MXSegmentedPagerController {
     }
 }
 
+class CollectionVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .black
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: String.init(describing: CollectionViewCell.self))
+        return collectionView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(collectionView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
+    }
+    
+    let colors = [UIColor.orange, UIColor.blue, UIColor.orange, UIColor.blue, UIColor.orange, UIColor.blue]
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String.init(describing: CollectionViewCell.self), for: indexPath) as! CollectionViewCell
+        cell.contentView.backgroundColor = colors[indexPath.item]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 300)
+    }
+}
+
 class ViewController: UIViewController {
     
     let pagerVC = StorePagerViewController()
@@ -213,6 +255,11 @@ class ViewController: UIViewController {
         pagerVC.segmentedPager.parallaxHeader.view = headerView
         pagerVC.segmentedPager.parallaxHeader.height = 300
         pagerVC.segmentedPager.parallaxHeader.mode = .fill
+        
+        let vc = CollectionVC()
+        vc.view.backgroundColor = .black
+        let m = StorePageModel(title: "dsfsd", viewController: vc)
+        pagerVC.update(models: [m])
     }
     
     override func viewWillAppear(_ animated: Bool) {
