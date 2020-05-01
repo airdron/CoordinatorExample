@@ -72,6 +72,7 @@
 }
 
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
+    
     UIViewController *viewController = [self segmentedPager:segmentedPager viewControllerForPageAtIndex:index];
     
     if (viewController) {

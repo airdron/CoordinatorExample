@@ -105,6 +105,15 @@ typedef NS_ENUM(NSInteger, MXSegmentedControlPosition) {
  */
 - (BOOL)segmentedPagerShouldScrollToTop:(MXSegmentedPager *)segmentedPager;
 
+/**
+ Asks the delegate if the scrollview should scroll with the subview.
+ 
+ @param subView    An instance of a sub view.
+ 
+ @return YES to allow scrollview and subview to scroll together. YES by default.
+ */
+- (BOOL)shouldScrollWithSubView:(UIView *)subView;
+
 @end
 
 /**

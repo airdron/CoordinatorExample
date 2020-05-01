@@ -8,7 +8,7 @@ target 'NavigationTest' do
   # Pods for NavigationTest
 
 	pod 'MXParallaxHeader', :git => 'https://github.com/youla-dev/MXParallaxHeader.git'
-  pod 'MXSegmentedPager', :git => 'https://github.com/youla-dev/MXSegmentedPager.git', :branch => '88z'
+  pod 'MXSegmentedPager', :git => 'https://github.com/airdron/MXSegmentedPager', :branch => '88z+shouldScrollWithSubView'
   pod 'HMSegmentedControl', :git => 'https://github.com/youla-dev/HMSegmentedControl', :branch => 'accessibility'
   #Использую свой форк. Но я в нем ничего не менял. Просто автор уже исправил косяк, не не сделал релиз. Убрать эту строчку, когда обновятся MXSegmentedPager и MXParallaxHeader и они будут использовать новую версию MXPagerView
   pod 'MXPagerView', '= 0.1.3'

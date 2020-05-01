@@ -108,8 +108,14 @@ struct StorePageModel {
     let viewController: UIViewController
 }
 
+protocol StorePagerViewControllerDelegate: class {
+    func shouldScroll(withSubView subView: UIView) -> Bool
+}
+
 final class StorePagerViewController: MXSegmentedPagerController {
 
+    weak var delegate: StorePagerViewControllerDelegate?
+    
     private var models: [StorePageModel] = [StorePageModel(title: "", viewController: UIViewController())]
 
     override func viewDidLoad() {
@@ -175,6 +181,10 @@ final class StorePagerViewController: MXSegmentedPagerController {
     override func heightForSegmentedControl(in segmentedPager: MXSegmentedPager) -> CGFloat {
         return 0
     }
+    
+    override func shouldScroll(withSubView subView: UIView) -> Bool {
+        return delegate?.shouldScroll(withSubView: subView) ?? true
+    }
 }
 
 class CollectionVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -219,9 +229,10 @@ class CollectionVC: UIViewController, UICollectionViewDataSource, UICollectionVi
     }
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, StorePagerViewControllerDelegate {
     
     let pagerVC = StorePagerViewController()
+    let headerView = HeaderView()
     
     var onClose: (() -> Void)?
     var onPresentNext: (() -> Void)?
@@ -250,9 +261,9 @@ class ViewController: UIViewController {
         view.addSubview(pagerVC.view)
         pagerVC.didMove(toParent: self)
         
-        let headerView = HeaderView()
         headerView.backgroundColor = .red
         pagerVC.segmentedPager.parallaxHeader.view = headerView
+        pagerVC.segmentedPager.parallaxHeader.minimumHeight = 150
         pagerVC.segmentedPager.parallaxHeader.height = 300
         pagerVC.segmentedPager.parallaxHeader.mode = .fill
         
@@ -260,6 +271,7 @@ class ViewController: UIViewController {
         vc.view.backgroundColor = .black
         let m = StorePageModel(title: "dsfsd", viewController: vc)
         pagerVC.update(models: [m])
+        pagerVC.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -295,6 +307,10 @@ class ViewController: UIViewController {
     
     @objc func presentNextHandler() {
         onPresentNext?()
+    }
+    
+    func shouldScroll(withSubView subView: UIView) -> Bool {
+        return subView != headerView.collectionView
     }
 }
 

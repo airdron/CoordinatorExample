@@ -227,6 +227,10 @@
 - (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
     UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
     
+    if ([self.delegate respondsToSelector:@selector(shouldScrollWithSubView:)]) {
+        return [self.delegate shouldScrollWithSubView:subView];
+    }
+    
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
         return [page segmentedPager:self shouldScrollWithView:subView];
     }
