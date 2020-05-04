@@ -12,7 +12,7 @@ import MXSegmentedPager
 class CollectionLayout: UICollectionViewFlowLayout {
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+        return false
     }
 }
 
@@ -97,9 +97,21 @@ class HeaderView: UIView, UICollectionViewDataSource, UICollectionViewDelegateFl
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.frame = bounds
-        collectionLayout.estimatedItemSize = bounds.size
         collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.frame = bounds
+        
+        let left: CGFloat
+        let right: CGFloat
+        if #available(iOS 11.0, *) {
+            right = safeAreaInsets.right
+            left = safeAreaInsets.left
+        } else {
+            right = 0
+            left = 0
+        }
+        collectionView.frame.origin.x = left
+        collectionView.frame.size.width = collectionView.frame.size.width - right - left
+        collectionLayout.estimatedItemSize = bounds.size
     }
 }
 
@@ -203,8 +215,14 @@ class CollectionVC: UIViewController, UICollectionViewDataSource, UICollectionVi
         view.addSubview(collectionView)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+
         collectionView.frame = view.bounds
     }
     
@@ -225,7 +243,7 @@ class CollectionVC: UIViewController, UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 300)
+        return CGSize(width: collectionView.bounds.size.width, height: collectionView.bounds.size.width / 2)
     }
 }
 
@@ -280,6 +298,11 @@ class ViewController: UIViewController, StorePagerViewControllerDelegate {
         
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        print(#function)
+    }
+    
     @available(iOS 11.0, *)
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
@@ -302,6 +325,7 @@ class ViewController: UIViewController, StorePagerViewControllerDelegate {
         
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        print(#function)
         pagerVC.view.frame = view.bounds
     }
     
